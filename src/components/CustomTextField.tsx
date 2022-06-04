@@ -4,7 +4,7 @@ import {
   FormState, 
   UseFormRegister 
 } from 'react-hook-form';
-import { TextField } from '@mui/material';
+import { InputAdornment, TextField } from '@mui/material';
 
 type Props = {
   label:string;
@@ -14,7 +14,8 @@ type Props = {
   minLength?:number;
   maxLength?:number;
   required?:boolean;
-  type?: 'number' | 'text';
+  type?: 'number' | 'text' | 'email' | 'password';
+  startAdornment?:string
 }
 
 export default function CustomTextField(props:Props) {
@@ -27,7 +28,8 @@ export default function CustomTextField(props:Props) {
     required = true,
     minLength = 0,
     maxLength = 0,
-    type = 'text'
+    type = 'text',
+    startAdornment 
   } = props;
 
   return (
@@ -54,6 +56,9 @@ export default function CustomTextField(props:Props) {
         ${errors[inputName]?.type === 'maxLength' ? `Campo no puede tener más de ${maxLength} caracteres` : ''}
         ${errors[inputName]?.type === 'minLength' ? `Campo no puede tener menos de ${minLength} caracteres` : ''}
       `}
+      InputProps={{
+        startAdornment: startAdornment ? <InputAdornment position="start">{startAdornment}</InputAdornment> : undefined,
+      }}
     />
   )
 }

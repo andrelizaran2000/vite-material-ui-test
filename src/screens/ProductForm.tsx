@@ -1,15 +1,14 @@
 // Modules
 import { 
-  Box, 
+  Paper, 
   Button, 
   Checkbox, 
   FormControlLabel, 
   Snackbar, 
   Stack,
-  Typography
+  Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { Container } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import { grey } from '@mui/material/colors';
 
@@ -17,7 +16,15 @@ import { grey } from '@mui/material/colors';
 import CustomSelect from '../components/CustomSelect';
 import CustomTextField from '../components/CustomTextField';
 import CustomDateSelector from '../components/CustomDateSelector';
-import UserDialog from '../components/UserDialog';
+
+import { 
+  ContainerCentered,
+  PaperContainer,
+  FormContainer
+} from '../containers/Containers';
+
+// Dialogs
+import UserDialog from '../dialogs/UserDialog';
 
 export const productTypes = [
   { value:0, label:'Electrónica' },
@@ -56,102 +63,93 @@ export default function ProductForm () {
   }
 
   return (
-    <Container sx={{ height:'100vh', backgroundColor:'', display:'flex', alignItems:'center' }}>
-      <Box 
-        sx={{ 
-          padding:4, 
-          border:1, 
-          borderColor:'lightgray',
-          borderRadius:2, width:'100%', 
-          display:'flex', 
-          flexDirection:'column', 
-          '& .MuiTextField-root': { mb: 3, width: '100%' },
-        }}
-        component="form"
-        autoComplete='off'
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Typography variant='h5' component='h2'>Guardar producto</Typography>
-        <Typography variant='subtitle1' mb={3} color={grey[600]}>Usuario actual: {usuarioActual.alias}</Typography> 
-        <CustomSelect
-          label='Tipo de producto'
-          formState={formState}
-          inputName='productType'
-          register={register}
-          options={productTypes}
-        />
-        <CustomTextField 
-          formState={formState}
-          label='Nombre del producto'
-          inputName='productName'
-          register={register}
-        /> 
-        <CustomTextField 
-          formState={formState}
-          label='Marca del producto'
-          inputName='productBrand'
-          register={register}
-        /> 
-        <CustomDateSelector
-          formState={formState}
-          inputName='productDate'
-          label='Registra la fecha de ingreso'
-          register={register}
-        />
-        <CustomTextField 
-          formState={formState}
-          label='Precio de producto'
-          inputName='productPrice'
-          maxLength={7}
-          minLength={2}
-          register={register}
-        />
-        <Stack 
-          direction="row" 
-          spacing={2} 
-          mb={2}
+    <ContainerCentered>
+      <PaperContainer>
+        <FormContainer 
+          component='form' 
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ '& .MuiTextField-root': { mb: 3, width: '100%' } }}
         >
-          <FormControlLabel 
-            control={<Checkbox defaultChecked />} 
-            label="Aplican promociones" 
+          <Typography variant='h5' component='h2'>Guardar producto</Typography>
+          <Typography variant='subtitle2' mb={3} color={grey[600]}>Usuario actual: {usuarioActual.alias}</Typography>
+
+          <CustomSelect
+            label='Tipo de producto'
+            formState={formState}
+            inputName='productType'
+            register={register}
+            options={productTypes}
           />
-          <FormControlLabel 
-            control={<Checkbox/>} 
-            label="Aplica garantía extendida" 
+          <CustomTextField
+            formState={formState}
+            label='Nombre del producto'
+            inputName='productName'
+            register={register}
           />
-        </Stack>
-
-        <Stack direction='row' spacing={2}>
-          <Button   
-            variant='contained' 
-            color='primary'
-            type='submit'
-            fullWidth
-          >Salvar</Button>
-          <Button   
-            variant='contained' 
-            color='neutral'
-            onClick={() => setShowDialog(true)}
-            fullWidth
-            type='button'
-          >Mostrar usuarios</Button>
-        </Stack>
-
-        <UserDialog
-          onClose={handleClose}
-          open={showDialog}
-          users={userOptions}
-          setUsuarioActual={setUsuarioActual}
-        />
-
-        <Snackbar
-          open={showMessage}
-          autoHideDuration={6000}
-          onClose={() => setShowMessage(false)}
-          message="Producto creado"
-        />
-
-      </Box>
-    </Container>
+          <CustomTextField
+            formState={formState}
+            label='Marca del producto'
+            inputName='productBrand'
+            register={register}
+          />
+          <CustomDateSelector
+            formState={formState}
+            inputName='productDate'
+            label='Registra la fecha de ingreso'
+            register={register}
+          />
+          <CustomTextField
+            formState={formState}
+            label='Precio de producto'
+            inputName='productPrice'
+            maxLength={7}
+            minLength={2}
+            register={register}
+            startAdornment='$'
+          />
+          <Stack
+            direction="row"
+            spacing={2}
+            mb={2}
+          >
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="Aplican promociones"
+            />
+            <FormControlLabel
+              control={<Checkbox/>}
+              label="Aplica garantía extendida"
+            />
+          </Stack>
+          <Stack direction='row' spacing={2}>
+            <Button
+              variant='contained'
+              color='primary'
+              type='submit'
+              fullWidth
+            >Salvar</Button>
+            <Button
+              variant='contained'
+              color='neutral'
+              onClick={() => setShowDialog(true)}
+              fullWidth
+              type='button'
+            >Mostrar usuarios</Button>
+          </Stack>
+          <UserDialog
+            onClose={handleClose}
+            open={showDialog}
+            users={userOptions}
+            setUsuarioActual={setUsuarioActual}
+          />
+          <Snackbar
+            open={showMessage}
+            autoHideDuration={6000}
+            onClose={() => setShowMessage(false)}
+            message="Producto creado"
+          />
+        </FormContainer>
+      </PaperContainer>
+    </ContainerCentered>
   )
 }
