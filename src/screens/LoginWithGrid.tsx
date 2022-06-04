@@ -1,12 +1,7 @@
 // Modules
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { grey, orange } from '@mui/material/colors';
 import { Button, Grid, Typography } from '@mui/material'
-
-// Actions
-import { userActions, snackbarActions } from '../store/actions/index'
 
 // Components
 import UiContainer from '../containers/UiContainer';
@@ -16,6 +11,9 @@ import { FormContainer, PaperContainer } from '../containers/Containers';
 // Types
 import { UserType } from '../store/types/user';
 import { SnackbarType } from '../store/types/snackbar';
+
+// Hooks
+import useBindActions from '../hooks/useBindActions';
 
 export default function LoginWithGrid() {
   return (
@@ -57,9 +55,9 @@ function LoginContainer () {
     formState,
   } = useForm();
 
-  const dispatch = useDispatch();
-  const { signInUser } = bindActionCreators(userActions, dispatch)
-  const { showSnackbar } = bindActionCreators(snackbarActions, dispatch);
+  const { userBindActions, snackbarBindActions } = useBindActions();
+  const { signInUser } = userBindActions
+  const { showSnackbar } = snackbarBindActions
 
   function onSubmit (data:any) {
     signInUser(dummyUserPayload);

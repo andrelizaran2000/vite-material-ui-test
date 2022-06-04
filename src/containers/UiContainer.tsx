@@ -1,14 +1,12 @@
 // Modules
 import { ReactNode } from 'react';
 import { Snackbar } from '@mui/material';
-import { bindActionCreators } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
-
-// Actions
-import { snackbarActions } from '../store/actions/index'
 
 // Types
-import { State } from '../store/store';
+import useBindActions from '../hooks/useBindActions';
+
+// Hooks
+import useSelectors from '../hooks/useSelectors';
 
 type Props = {
   children:ReactNode
@@ -16,9 +14,10 @@ type Props = {
 
 export default function UiContainer({ children }:Props) {
 
-  const dispatch = useDispatch();
-  const { title } = useSelector((state:State) => state.snackbar)
-  const { hideSnackbar} = bindActionCreators(snackbarActions, dispatch);
+  const { snackbarBindActions } = useBindActions();
+  const { hideSnackbar } = snackbarBindActions;
+  const { snackbar } = useSelectors()
+  const { title } = snackbar;
 
   return (
     <>
