@@ -14,6 +14,7 @@ import { SnackbarType } from '../store/types/snackbar';
 
 // Hooks
 import useBindActions from '../hooks/useBindActions';
+import { regExpCommon } from '../utils/regExp';
 
 export default function LoginWithGrid() {
   return (
@@ -60,6 +61,7 @@ function LoginContainer () {
   const { showSnackbar } = snackbarBindActions
 
   function onSubmit (data:any) {
+    console.log(data)
     signInUser(dummyUserPayload);
     showSnackbar(dummySnackbarPayload)
   }
@@ -85,6 +87,7 @@ function LoginContainer () {
           inputName='password'
           register={register}
           type='password'
+          pattern={regExpCommon.password}
         />
         <Button
           variant='contained'
