@@ -8,13 +8,15 @@ import UiContainer from '../containers/UiContainer';
 import CustomTextField from '../components/CustomTextField';
 import { FormContainer, PaperContainer } from '../containers/Containers';
 
+// Hooks
+import useBindActions from '../hooks/useBindActions';
+
+// RegExp
+import { regExpCommon } from '../utils/regExp';
+
 // Types
 import { UserType } from '../store/types/user';
 import { SnackbarType } from '../store/types/snackbar';
-
-// Hooks
-import useBindActions from '../hooks/useBindActions';
-import { regExpCommon } from '../utils/regExp';
 
 export default function LoginWithGrid() {
   return (
@@ -24,14 +26,14 @@ export default function LoginWithGrid() {
           item
           xs={0}
           md={6}
-          lg={8}
+          lg={7}
           sx={{ height:'100vh', background:orange[500] }}      >
         </Grid>
         <Grid
           item
           xs={12}
           md={6}
-          lg={4}
+          lg={5}
           sx={{
             height:'100vh',
             background:grey[800],
